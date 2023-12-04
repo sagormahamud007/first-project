@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const userNameSchema = z.object({
+const userNameValidationSchema = z.object({
     firstName: z.string()
         .min(1, { message: "First name is required" })
         .max(20, { message: "First name can not be more than 20 characters" })
@@ -12,7 +12,7 @@ const userNameSchema = z.object({
     lastName: z.string().min(1)
 });
 
-const guardianSchema = z.object({
+const guardianValidationSchema = z.object({
     fatherName: z.string()
         .min(1, { message: "Father's name is required" })
         .max(20, { message: "Father's name can not be more than 20 characters" }),
@@ -33,7 +33,7 @@ const guardianSchema = z.object({
         .min(1, { message: "Mother's contact number is required" }),
 });
 
-const localGuardianSchema = z.object({
+const localGuardianValidationSchema = z.object({
     name: z.string()
         .min(1, { message: "Local guardian's name is required" }),
 
@@ -52,7 +52,7 @@ const createStudentValidationSchema = z.object({
         password: z.string().max(20),
 
         student: z.object({
-            name: userNameSchema
+            name: userNameValidationSchema
                 .refine(value => !!value.firstName || !!value.lastName, {
                     message: "At least one of the first name or last name is required"
                 }),
@@ -69,11 +69,11 @@ const createStudentValidationSchema = z.object({
                 .min(1, { message: "Present address is required" }),
             permanentddress: z.string()
                 .min(1, { message: "Permanent address is required" }),
-            guardian: guardianSchema
+            guardian: guardianValidationSchema
                 .refine(value => !!value.fatherName || !!value.motherName, {
                     message: "At least one of the father's name or mother's name is required"
                 }),
-            localGuardian: localGuardianSchema,
+            localGuardian: localGuardianValidationSchema,
             profileImg: z.string(),
         })
 
