@@ -6,7 +6,7 @@ const router = express.Router()
 
 //will call controller func
 router.post("/create-student",
-    validateRequest(studentValidations.studentValidationSchema),
+    validateRequest(studentValidations.createStudentValidationSchema),
     UserControllers.createStudent)
 
 export const UsersRoutes = router; 
