@@ -49,15 +49,14 @@ const localGuardianValidationSchema = z.object({
 
 const createStudentValidationSchema = z.object({
     body: z.object({
-        password: z.string().max(20),
-
+        password: z.string().max(20).optional(),
         student: z.object({
             name: userNameValidationSchema
                 .refine(value => !!value.firstName || !!value.lastName, {
                     message: "At least one of the first name or last name is required"
                 }),
             gender: z.enum(['male', 'female', 'other']),
-            dateOfBirth: z.string(),
+            dateOfBirth: z.string().optional(),
             contactNo: z.string()
                 .min(1, { message: "Contact number is required" }),
             emergencyContactNo: z.string()
@@ -67,7 +66,7 @@ const createStudentValidationSchema = z.object({
             bloodGroup: z.enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']),
             presentAddress: z.string()
                 .min(1, { message: "Present address is required" }),
-            permanentddress: z.string()
+            permanentAddress: z.string()
                 .min(1, { message: "Permanent address is required" }),
             guardian: guardianValidationSchema
                 .refine(value => !!value.fatherName || !!value.motherName, {
@@ -75,6 +74,7 @@ const createStudentValidationSchema = z.object({
                 }),
             localGuardian: localGuardianValidationSchema,
             profileImg: z.string(),
+            admissionSemester: z.string()
         })
 
     })

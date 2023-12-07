@@ -101,7 +101,7 @@ const studentSchema = new Schema<TStudent, StudentModel>({
         },
         required: [true, "Gender is required"]
     },
-    dateOfBirth: { type: String },
+    dateOfBirth: { type: Date },
     contactNo: {
         type: String,
         required: [true, "Contact number is required"]
@@ -140,6 +140,14 @@ const studentSchema = new Schema<TStudent, StudentModel>({
         required: true
     },
     profileImg: { type: String },
+    admissionSemester: {
+        type: Schema.Types.ObjectId,
+        ref: "AcademicSemester"
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false
+    }
     //creating a custom static method
     // studentSchema.statics.isUserExists = async function () {
     //     const existingUser = await Student.findOne({ id })
